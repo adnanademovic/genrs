@@ -35,10 +35,10 @@ def depending_on(spec):
                 packages.append('std_msgs')
             else:
                 (package, name) = genmsg.names.package_resource_name(field.base_type)
-                packages.append(package or spec.package) # convert '' to package
+                packages.append('%s_msg'%(package or spec.package)) # convert '' to package
     return set(packages)
 
-def msg_type_to_rs(type):
+def msg_type_to_rs(type, package):
     """
     Converts a message type (e.g. uint32, std_msgs/String, etc.) into the Rust declaration
     for that type (e.g. u32, std_msgs.msg.String)
@@ -54,13 +54,15 @@ def msg_type_to_rs(type):
         rs_type = MSG_TYPE_TO_RS[base_type]
     elif (len(base_type.split('/')) == 1):
         if (genmsg.msgs.is_header_type(base_type)):
-            rs_type = 'std_msgs::msg::Header'
+            rs_type = 'std_msgs_msg::Header'
         else:
             rs_type = base_type
     else:
         pkg = base_type.split('/')[0]
         msg = base_type.split('/')[1]
-        rs_type = '%s::msg::%s'%(pkg, msg)
+        if pkg == package:
+            pkg = 'super::' + msg
+        rs_type = '%s_msg::%s'%(pkg,msg)
 
     if is_array:
         if array_len is None:
@@ -70,7 +72,7 @@ def msg_type_to_rs(type):
     else:
         return rs_type
 
-def default_value(type):
+def default_value(type, package):
     """
     Returns the value to initialize a message member with.
 
@@ -87,7 +89,7 @@ def default_value(type):
     if is_array and array_len is None:
         return 'vec![]'
     rs_def = None
-    rs_type = msg_type_to_rs(base_type)
+    rs_type = msg_type_to_rs(base_type, package)
     if base_type in ['byte', 'int8', 'int16', 'int32', 'int64',
                 'char', 'uint8', 'uint16', 'uint32', 'uint64',
                 'time', 'duration']:

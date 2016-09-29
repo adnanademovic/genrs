@@ -20,29 +20,31 @@ import genmsg.msgs
 import genrs
 }@
 
+@{
+for package in genrs.depending_on(spec):
+    if package[:-4] != spec.package:
+       print('extern crate %s;'%(package))
+}@
+
 @##############################
 @# Generic Includes
 @##############################
-use rustc_serialize;
 use rosrust;
+use std;
 
 @##############################
 @# Includes for dependencies
 @##############################
-@{
-for package in genrs.depending_on(spec):
-    print('use %s;'%(package))
-}@
 
 #[derive(Clone,Debug,RustcEncodable,RustcDecodable)]
 pub struct @(spec.short_name) {@[for field in spec.parsed_fields()]
-    pub @(field.name): @(genrs.msg_type_to_rs(field.type)),@[end for]
+    pub @(field.name): @(genrs.msg_type_to_rs(field.type, spec.package)),@[end for]
 }
 
 impl @(spec.short_name) {
     pub fn new() -> @(spec.short_name) {
         @(spec.short_name) {@[for field in spec.parsed_fields()]
-            @(field.name): @(genrs.default_value(field.type)),@[end for]
+            @(field.name): @(genrs.default_value(field.type, spec.package)),@[end for]
         }
     }
 }
