@@ -48,7 +48,7 @@ macro(_generate_module_rs ARG_PKG ARG_GEN_OUTPUT_DIR ARG_GENERATED_FILES)
 
   assert(CATKIN_ENV)
   add_custom_command(OUTPUT ${GEN_OUTPUT_FILE}
-    DEPENDS ${GENRS_BIN}
+    DEPENDS ${GENRS_BIN} "${GENRS_TEMPLATE_DIR}/mod.rs.template" ${ARGN}
     COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENRS_BIN}
     -p ${ARG_PKG}
     -o ${GEN_OUTPUT_DIR}
