@@ -39,7 +39,8 @@ pub struct @(spec.short_name) {
 impl rosrust::tcpros::message::RosMessage for @(spec.short_name) {
 @[for trait_class,trait_value in [
     ['md5sum', md5sum],
-    ['msg_type', spec.full_name]
+    ['msg_type', spec.full_name],
+    ['msg_definition', '']
 ]]@
     fn @(trait_class)() -> std::string::String {
         "@(trait_value)".to_owned()
