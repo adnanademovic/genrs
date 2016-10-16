@@ -54,13 +54,13 @@ def msg_type_to_rs(type, package):
         rs_type = MSG_TYPE_TO_RS[base_type]
     elif (len(base_type.split('/')) == 1):
         if (genmsg.msgs.is_header_type(base_type)):
-            rs_type = 'msg::std_msgs::Header'
+            rs_type = 'super::std_msgs::Header'
         else:
             rs_type = base_type
     else:
         pkg = base_type.split('/')[0]
         msg = base_type.split('/')[1]
-        rs_type = 'msg::%s::%s'%(pkg, msg)
+        rs_type = 'super::%s::%s'%(pkg, msg)
 
     if is_array:
         if array_len is None:
