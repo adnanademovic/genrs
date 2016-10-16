@@ -20,18 +20,6 @@ import genmsg.msgs
 import genrs
 }@
 
-@{
-for package in genrs.depending_on(spec):
-    if package[:-4] != spec.package:
-       print('extern crate %s;'%(package))
-}@
-
-@##############################
-@# Generic Includes
-@##############################
-use rosrust;
-use std;
-
 @##############################
 @# Includes for dependencies
 @##############################

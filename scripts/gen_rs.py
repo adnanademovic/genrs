@@ -8,8 +8,8 @@ import sys
 import os
 import genmsg.template_tools
 
-msg_template_map = { 'msg.rs.template':'@NAME@_msg.rs' }
-srv_template_map = { 'srv.rs.template':'@NAME@_msg.rs' }
+msg_template_map = { 'msg.rs.template':'@NAME@.rs' }
+srv_template_map = { 'srv.rs.template':'@NAME@.rs' }
 
 if __name__ == "__main__":
     print sys.argv
