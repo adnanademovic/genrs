@@ -35,7 +35,7 @@ def depending_on(spec):
                 packages.append('std_msgs')
             else:
                 (package, name) = genmsg.names.package_resource_name(field.base_type)
-                packages.append('%s_msg'%(package or spec.package)) # convert '' to package
+                packages.append((package or spec.package) + ' ' + name) # convert '' to package
     return set(packages)
 
 def msg_type_to_rs(type, package):
@@ -54,15 +54,13 @@ def msg_type_to_rs(type, package):
         rs_type = MSG_TYPE_TO_RS[base_type]
     elif (len(base_type.split('/')) == 1):
         if (genmsg.msgs.is_header_type(base_type)):
-            rs_type = 'std_msgs_msg::Header'
+            rs_type = 'msg::std_msgs::Header'
         else:
             rs_type = base_type
     else:
         pkg = base_type.split('/')[0]
         msg = base_type.split('/')[1]
-        if pkg == package:
-            pkg = 'super::' + msg
-        rs_type = '%s_msg::%s'%(pkg,msg)
+        rs_type = 'msg::%s::%s'%(pkg, msg)
 
     if is_array:
         if array_len is None:
