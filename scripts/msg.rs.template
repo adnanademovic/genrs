@@ -24,13 +24,17 @@ import genrs
 // DO NOT EDIT!
 
 @##############################
-@# Includes for dependencies
+@# Definition of fields
 @##############################
 
 #[derive(Clone,Debug,RustcEncodable,RustcDecodable)]
 pub struct @(spec.short_name) {@[for field in spec.parsed_fields()]
     pub @(field.name): @(genrs.msg_type_to_rs(field.type, spec.package)),@[end for]
 }
+
+@##############################
+@# Definition of constructor
+@##############################
 
 impl @(spec.short_name) {
     pub fn new() -> @(spec.short_name) {
@@ -39,6 +43,10 @@ impl @(spec.short_name) {
         }
     }
 }
+
+@##############################
+@# Definition of methods
+@##############################
 
 impl rosrust::tcpros::message::RosMessage for @(spec.short_name) {
 @[for trait_class,trait_value in [
