@@ -1,6 +1,6 @@
 @###############################################
 @#
-@# ROS message source code generation for Rust
+@# ROS service source code generation for Rust
 @#
 @# EmPy template for generating <msg>.rs files
 @#
@@ -27,23 +27,25 @@ import genrs
 @##############################
 
 #[derive(Clone,Debug,RustcEncodable,RustcDecodable)]
-pub struct @(spec.short_name) {
-    pub request: @(spec.short_name)Request,
-    pub response: @(spec.short_name)Response,
-}
+pub struct @(spec.short_name) {}
 
 @##############################
 @# Definition of methods
 @##############################
 
-impl rosrust::tcpros::message::RosMessage for @(spec.short_name) {
+impl rosrust::Message for @(spec.short_name) {
 @[for trait_class,trait_value in [
     ['md5sum', md5sum],
     ['msg_type', spec.full_name],
     ['msg_definition', '']
 ]]@
     fn @(trait_class)() -> std::string::String {
-        "@(trait_value)".to_owned()
+        "@(trait_value)".into()
     }
 @[end for]
+}
+
+impl rosrust::Service for @(spec.short_name) {
+    type Request = @(spec.short_name)Request;
+    type Response = @(spec.short_name)Response;
 }

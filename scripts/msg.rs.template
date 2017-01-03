@@ -1,4 +1,3 @@
-@# THIS IS JUST A COPY OF THE MSG TEMPLATE. FIX THIS!!!!
 @###############################################
 @#
 @# ROS message source code generation for Rust
@@ -48,14 +47,14 @@ impl @(spec.short_name) {
 @# Definition of methods
 @##############################
 
-impl rosrust::tcpros::message::RosMessage for @(spec.short_name) {
+impl rosrust::Message for @(spec.short_name) {
 @[for trait_class,trait_value in [
     ['md5sum', md5sum],
     ['msg_type', spec.full_name],
     ['msg_definition', genrs.escape_message_definition(msg_definition)]
 ]]@
     fn @(trait_class)() -> std::string::String {
-        "@(trait_value)".to_owned()
+        "@(trait_value)".into()
     }
 @[end for]
 }
