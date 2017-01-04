@@ -58,3 +58,14 @@ impl ::rosrust::Message for @(spec.short_name) {
     }
 @[end for]
 }
+
+@# Constants
+@[for constant in spec.constants]@
+ @[if (constant.type == 'string')]@
+pub static @(spec.short_name)_@(constant.name) : &'static str = "@(constant.val)";
+ @[elif (constant.type == 'bool')]@
+pub const @(spec.short_name)_@(constant.name) : bool = @(int(constant.val)) != 0;
+ @[else]@
+pub const @(spec.short_name)_@(constant.name) : @(genrs.msg_type_to_rs(constant.type, spec.package)) = @(int(constant.val));
+ @[end if]@
+@[end for]
