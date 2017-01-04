@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
 <package>
   <name>genrs</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>Rust ROS message and service generators</description>
   <maintainer email="adnanademovic100@gmail.com">Adnan Ademovic</maintainer>
   <license>BSD</license>
+
+  <url type="bugtracker">https://github.com/adnanademovic/genrs/issues</url>
+  <url type="repository">https://github.com/adnanademovic/genrs</url>
+
+  <author>Adnan Ademovic</author>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>genmsg</build_depend>
@@ -12,5 +17,6 @@
 
   <export>
     <message_generator>rs</message_generator>
+    <architecture_independent/>
   </export>
 </package>
