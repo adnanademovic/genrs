@@ -26,6 +26,7 @@ import genrs
 @# Definition of fields
 @##############################
 
+#[allow(dead_code,non_camel_case_types,non_snake_case)]
 #[derive(Clone,Debug,RustcEncodable,RustcDecodable)]
 pub struct @(spec.short_name) {@[for field in spec.parsed_fields()]
     pub @(field.name): @(genrs.msg_type_to_rs(field.type, spec.package)),@[end for]
@@ -35,6 +36,7 @@ pub struct @(spec.short_name) {@[for field in spec.parsed_fields()]
 @# Definition of constructor
 @##############################
 
+#[allow(dead_code,non_snake_case)]
 impl @(spec.short_name) {
     pub fn new() -> @(spec.short_name) {
         @(spec.short_name) {@[for field in spec.parsed_fields()]
@@ -61,6 +63,7 @@ impl ::rosrust::Message for @(spec.short_name) {
 
 @# Constants
 @[for constant in spec.constants]@
+#[allow(dead_code,non_upper_case_globals)]
  @[if (constant.type == 'string')]@
 pub static @(spec.short_name)_@(constant.name) : &'static str = "@(constant.val)";
  @[elif (constant.type == 'bool')]@
