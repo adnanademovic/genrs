@@ -68,7 +68,7 @@ impl ::rosrust::Message for @(spec.short_name) {
 pub static @(spec.short_name)_@(constant.name) : &'static str = "@(constant.val)";
  @[elif (constant.type == 'bool')]@
 pub const @(spec.short_name)_@(constant.name) : bool = @(int(constant.val)) != 0;
- @[else]@
+ @[elif (constant.type in ['byte', 'char', 'bool', 'uint8', 'uint16', 'uint32', 'uint64', 'int8', 'int16', 'int32', 'int64', 'float32', 'float64'])]@
 pub const @(spec.short_name)_@(constant.name) : @(genrs.msg_type_to_rs(constant.type, spec.package)) = @(int(constant.val));
  @[end if]@
 @[end for]
