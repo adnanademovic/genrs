@@ -26,6 +26,7 @@ import genrs
 @# Definition of fields
 @##############################
 
+#[allow(dead_code,non_camel_case_types)]
 #[derive(Clone,Debug,RustcEncodable,RustcDecodable)]
 pub struct @(spec.short_name) {}
 
